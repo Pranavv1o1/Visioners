@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Clubs - UniEvents</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #4A69E2;
+            --dark-blue: #1C2541;
+            --text-color: #333;
+            --text-light: #666;
+            --background-color: #F8F9FA;
+            --white-color: #FFFFFF;
+            --border-color: #E0E0E0;
+            --card-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+        /* --- DARK MODE STYLES --- */
+body.dark-mode {
+    --dark-blue: #a7b5ff;
+    --text-color: #E0E0E0;
+    --text-light: #A0A0A0;
+    --background-color: #121212;
+    --white-color: #1E1E1E;
+    --border-color: #2c2c2c;
+    --card-shadow: 0 4px 12px rgba(0,0,0,0.4);
+}
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        .navbar {
+            background-color: var(--white-color);
+            padding: 15px 0;
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .navbar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 30px;
+            margin: 0;
+        }
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+        }
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+        .section {
+            padding: 60px 0;
+        }
+        .section h1 {
+            text-align: center;
+            font-size: 36px;
+            margin-bottom: 40px;
+            color: var(--dark-blue);
+        }
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        .card {
+            background-color: var(--white-color);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+            transition: transform 0.3s, box-shadow 0.3s;
+            display: flex;
+            flex-direction: column;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+        }
+        .card-image img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            display: block;
+        }
+        .card-content {
+            padding: 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .card-title { font-size: 20px; margin: 0 0 10px 0; color: var(--dark-blue); }
+        .card-description { font-size: 14px; color: var(--text-light); margin-bottom: 20px; flex-grow: 1; }
+        .card-info { display: flex; justify-content: space-between; align-items: center; font-size: 14px; color: var(--text-light); margin-bottom: 20px; }
+        .btn { padding: 10px 20px; border: none; border-radius: 8px; font-size: 16px; font-weight: 500; cursor: pointer; width: 100%; }
+        .btn-primary { background-color: var(--primary-color); color: var(--white-color); }
+    </style>
+</head>
+<body>
+
+    <header class="navbar">
+        <div class="container">
+            <a href="1.html" class="logo">
+                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                <span>UniEvents</span>
+            </a>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="1.html">Home</a></li>
+                    <li><a href="events.html">Events</a></li>
+                    <li><a href="all clubs.html">Clubs</a></li>
+                    <li><a href="contact of organizers.html">Organizers</a></li>
+                    <li><a href="adminlogin.html">Admin</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="section">
+            <div class="container">
+                <h1>Explore Student Clubs</h1>
+                <div class="card-grid" id="all-clubs-grid">
+                    <!-- Club cards will be inserted here -->
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="https://www.gstatic.com/firebasejs/9.6.7/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.7/firebase-auth-compat.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const firebaseConfig = {
+                apiKey: "YOUR_API_KEY",
+                authDomain: "YOUR_AUTH_DOMAIN",
+                projectId: "YOUR_PROJECT_ID",
+                storageBucket: "YOUR_STORAGE_BUCKET",
+                messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+                appId: "YOUR_APP_ID"
+            };
+            
+            let auth;
+            try {
+                if (firebaseConfig.apiKey !== "YOUR_API_KEY") {
+                    if (!firebase.apps.length) {
+                        firebase.initializeApp(firebaseConfig);
+                    }
+                    auth = firebase.auth();
+                }
+            } catch (e) {
+                console.error("Firebase initialization error on clubs page:", e);
+            }
+
+            const allClubsData = [
+                { imageUrl: 'https://images.unsplash.com/photo-1542831371-29b0f74f9713?auto=format&fit=crop&q=80&w=1740', title: 'Computer Science Club', description: 'For all things tech, coding, and innovation.', members: 245, eventsCount: 3 },
+                { imageUrl: 'https://th.bing.com/th/id/OIP.gAz7g8b_DwmibuEGCP4DrAHaEc?w=286&h=180&c=7&r=0&o=7&dpr=1.3&pid=1.7&rm=3', title: 'Photography Society', description: 'Capture moments and learn new skills.', members: 85, eventsCount: 2 },
+                { imageUrl: 'https://th.bing.com/th/id/OIP.j8M0NoGo3tG-CmPkTjCbPAHaE8?w=297&h=198&c=7&r=0&o=7&dpr=1.3&pid=1.7&rm=3', title: 'Debate Society', description: 'Sharpen your public speaking and critical thinking.', members: 65, eventsCount: 3 },
+                { imageUrl: 'https://th.bing.com/th/id/OIP.fNg2u8GJqJcBCP76gt6QdgHaB3?w=328&h=88&c=7&r=0&o=7&dpr=1.3&pid=1.7&rm=3', title: 'Eco Warriors Club', description: 'Promoting sustainability and green initiatives on campus.', members: 110, eventsCount: 4 },
+                { imageUrl: 'https://th.bing.com/th/id/OIP.JnrMuvdzwfRXpAhB04h6xgHaDF?w=299&h=145&c=7&r=0&o=7&dpr=1.3&pid=1.7&rm=3', title: 'Film Appreciation Club', description: 'Watch, discuss, and analyze classic and modern cinema.', members: 95, eventsCount: 5 },
+                { imageUrl: 'https://th.bing.com/th/id/OIP.2bO4vfW5YEu2AAgZmrr4jgHaEK?w=316&h=180&c=7&r=0&o=7&dpr=1.3&pid=1.7&rm=3', title: 'The Drama Club', description: 'For actors, writers, and backstage enthusiasts.', members: 70, eventsCount: 2 }
+            ];
+
+            const clubsGrid = document.getElementById('all-clubs-grid');
+
+            function createClubCardHTML(club) {
+                return `
+                    <div class="card">
+                        <div class="card-image"><img src="${club.imageUrl}" alt="${club.title}"></div>
+                        <div class="card-content">
+                            <h3 class="card-title">${club.title}</h3>
+                            <p class="card-description">${club.description}</p>
+                            <div class="card-info">
+                                <span>${club.members} members</span>
+                                <span>${club.eventsCount} events</span>
+                            </div>
+                            <button class="btn btn-primary join-club-btn" data-title="${club.title}">Join Club</button>
+                        </div>
+                    </div>`;
+            }
+            
+            clubsGrid.innerHTML = allClubsData.map(createClubCardHTML).join('');
+
+            document.querySelectorAll('.join-club-btn').forEach(button => {
+                button.addEventListener('click', () => {
+                    const clubTitle = button.dataset.title;
+                    
+                    if (!auth) {
+                        alert('You must be logged in to join a club. Please configure Firebase and log in from the homepage.');
+                        return;
+                    }
+                    
+                    auth.onAuthStateChanged(user => {
+                        if (user) {
+                            // Redirect to the chat page, passing the club name
+                            window.location.href = `club-chat.html?club=${encodeURIComponent(clubTitle)}`;
+                        } else {
+                            alert('You must be logged in to join a club. Please go to the homepage to log in or sign up.');
+                        }
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Calendar - UniEvents</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #4A69E2;
+            --dark-blue: #1C2541;
+            --text-color: #333;
+            --text-light: #666;
+            --background-color: #F8F9FA;
+            --white-color: #FFFFFF;
+            --border-color: #E0E0E0;
+            --card-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+        /* --- DARK MODE STYLES --- */
+body.dark-mode {
+    --dark-blue: #a7b5ff;
+    --text-color: #E0E0E0;
+    --text-light: #A0A0A0;
+    --background-color: #121212;
+    --white-color: #1E1E1E;
+    --border-color: #2c2c2c;
+    --card-shadow: 0 4px 12px rgba(0,0,0,0.4);
+}
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            background-color: var(--background-color);
+            color: var(--text-color);
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        .navbar {
+            background-color: var(--white-color);
+            padding: 15px 0;
+            border-bottom: 1px solid var(--border-color);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .navbar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 30px;
+            margin: 0;
+        }
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+        }
+        .section {
+            padding: 40px 0;
+        }
+        .calendar-container {
+            background: var(--white-color);
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+        }
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 20px;
+        }
+        .calendar-header h1 {
+            font-size: 24px;
+            color: var(--dark-blue);
+            margin: 0;
+        }
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+        }
+        .calendar-day-name {
+            font-weight: 600;
+            text-align: center;
+            padding-bottom: 10px;
+            color: var(--text-light);
+        }
+        .calendar-date {
+            border: 1px solid var(--border-color);
+            min-height: 120px;
+            padding: 8px;
+            font-weight: 500;
+        }
+        .calendar-date.other-month {
+            color: #ccc;
+        }
+        .event-entry {
+            background-color: var(--primary-color);
+            color: var(--white-color);
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            margin-top: 5px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            cursor: pointer;
+        }
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: var(--white-color);
+            padding: 8px 16px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+        }
+        .modal {
+            display: none; 
+            position: fixed; 
+            z-index: 1001;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.6);
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 30px 40px;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 400px;
+            position: relative;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        .close-btn {
+            color: #aaa;
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; margin-bottom: 5px; font-weight: 500; }
+        .form-group input { width: 100%; padding: 10px; border: 1px solid var(--border-color); border-radius: 8px; box-sizing: border-box; }
+        .full-width { width: 100%; }
+    </style>
+</head>
+<body>
+
+    <header class="navbar">
+        <div class="container">
+            <a href="1.html" class="logo">
+                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                <span>UniEvents</span>
+            </a>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="1.html">Home</a></li>
+                    <li><a href="events.html">Events</a></li>
+                    <li><a href="all clubs.html">Clubs</a></li>
+                    <li><a href="contact of organizers.html">Organizers</a></li>
+                    <li><a href="adminlogin.html">Admin</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="section">
+        <div class="container">
+            <div class="calendar-container">
+                <div class="calendar-header">
+                    <h1 id="month-year"></h1>
+                    <button id="add-event-btn" class="btn-primary">Add Event</button>
+                </div>
+                <div class="calendar-grid" id="calendar-days-header"></div>
+                <div class="calendar-grid" id="calendar-body"></div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Add Event Modal -->
+    <div id="add-event-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h2>Add a New Event</h2>
+            <form id="add-event-form">
+                <div class="form-group">
+                    <label for="event-title-input">Event Title</label>
+                    <input type="text" id="event-title-input" required>
+                </div>
+                <div class="form-group">
+                    <label for="event-date-input">Event Date</label>
+                    <input type="date" id="event-date-input" required>
+                </div>
+                <button type="submit" class="btn-primary full-width">Save Event</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const allEventsData = [
+                { date: 'Sat, Sep 27', title: 'Tech Innovation Summit 2025' },
+                { date: 'Fri, Oct 03', title: 'Spring Cultural Festival' },
+                { date: 'Thu, Oct 09', title: 'Career Fair 2025' },
+                { date: 'Wed, Oct 15', title: 'Open Mic Night' }
+            ];
+
+            const calendarBody = document.getElementById('calendar-body');
+            const monthYearHeader = document.getElementById('month-year');
+            const calendarDaysHeader = document.getElementById('calendar-days-header');
+            const addEventModal = document.getElementById('add-event-modal');
+            const addEventBtn = document.getElementById('add-event-btn');
+            const closeBtn = addEventModal.querySelector('.close-btn');
+            const addEventForm = document.getElementById('add-event-form');
+
+            const today = new Date('2025-09-27T00:00:00');
+            let currentMonth = today.getMonth();
+            let currentYear = today.getFullYear();
+
+            function renderCalendar() {
+                calendarBody.innerHTML = ''; 
+                const firstDayOfMonth = new Date(currentYear, currentMonth, 1).getDay();
+                const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+                monthYearHeader.textContent = `${new Date(currentYear, currentMonth).toLocaleString('default', { month: 'long' })} ${currentYear}`;
+
+                if(calendarDaysHeader.children.length === 0) {
+                    const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+                    days.forEach(day => {
+                        const dayNameDiv = document.createElement('div');
+                        dayNameDiv.className = 'calendar-day-name';
+                        dayNameDiv.textContent = day;
+                        calendarDaysHeader.appendChild(dayNameDiv);
+                    });
+                }
+                
+                for (let i = 0; i < firstDayOfMonth; i++) {
+                    const emptyCell = document.createElement('div');
+                    emptyCell.className = 'calendar-date other-month';
+                    calendarBody.appendChild(emptyCell);
+                }
+
+                for (let day = 1; day <= daysInMonth; day++) {
+                    const dateCell = document.createElement('div');
+                    dateCell.className = 'calendar-date';
+                    dateCell.innerHTML = `<span>${day}</span>`;
+                    
+                    const currentDate = new Date(currentYear, currentMonth, day);
+                    const dateString = currentDate.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' }).replace(',', '');
+                    
+                    const eventsForDay = allEventsData.filter(event => event.date.startsWith(dateString));
+                    
+                    eventsForDay.forEach(event => {
+                        const eventDiv = document.createElement('div');
+                        eventDiv.className = 'event-entry';
+                        eventDiv.textContent = event.title;
+                        eventDiv.onclick = () => alert(`Details for ${event.title}`);
+                        dateCell.appendChild(eventDiv);
+                    });
+                    calendarBody.appendChild(dateCell);
+                }
+            }
+            
+            // Modal Logic
+            addEventBtn.onclick = () => { addEventModal.style.display = 'block'; };
+            closeBtn.onclick = () => { addEventModal.style.display = 'none'; };
+            window.onclick = (event) => { if (event.target == addEventModal) { addEventModal.style.display = 'none'; } };
+
+            // Form Submission Logic
+            addEventForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const eventTitle = document.getElementById('event-title-input').value;
+                const eventDate = document.getElementById('event-date-input').value;
+
+                if (eventTitle && eventDate) {
+                    const dateObj = new Date(eventDate + 'T00:00:00'); // Use T00:00:00 to avoid timezone issues
+                    const formattedDate = dateObj.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' }).replace(',', '');
+
+                    allEventsData.push({ date: formattedDate, title: eventTitle });
+                    
+                    // Check if the new event is in the currently displayed month/year
+                    if (dateObj.getFullYear() === currentYear && dateObj.getMonth() === currentMonth) {
+                        renderCalendar();
+                    } else {
+                        // If not, navigate to that month and render
+                        currentYear = dateObj.getFullYear();
+                        currentMonth = dateObj.getMonth();
+                        renderCalendar();
+                    }
+
+                    addEventModal.style.display = 'none';
+                    addEventForm.reset();
+                }
+            });
+
+            renderCalendar();
+        });
+    </script>
+</body>
+</html>

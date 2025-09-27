@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cultural Events - UniEvents</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root { --primary-color: #4A69E2; --dark-blue: #1C2541; --text-color: #333; --background-color: #F8F9FA; --white-color: #FFFFFF; --border-color: #E0E0E0; --card-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+        /* --- DARK MODE STYLES --- */
+body.dark-mode {
+    --dark-blue: #a7b5ff;
+    --text-color: #E0E0E0;
+    --text-light: #A0A0A0;
+    --background-color: #121212;
+    --white-color: #1E1E1E;
+    --border-color: #2c2c2c;
+    --card-shadow: 0 4px 12px rgba(0,0,0,0.4);
+}
+        body { font-family: 'Inter', sans-serif; margin: 0; background-color: var(--background-color); }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        .navbar { background-color: var(--white-color); padding: 15px 0; border-bottom: 1px solid var(--border-color); box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        .navbar .container { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 24px; font-weight: 700; color: var(--primary-color); text-decoration: none; display: flex; align-items: center; gap: 10px; }
+        .nav-links { list-style: none; display: flex; gap: 30px; margin: 0; }
+        .nav-links a { text-decoration: none; color: var(--text-color); font-weight: 500; }
+        .section { padding: 40px 0; }
+        h1 { text-align: center; color: var(--dark-blue); }
+        .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+        .card { background-color: var(--white-color); border-radius: 12px; overflow: hidden; box-shadow: var(--card-shadow); }
+        .card-image img { width: 100%; height: 200px; object-fit: cover; }
+        .card-content { padding: 20px; }
+        .card-title { font-size: 20px; margin: 0 0 10px; }
+        .card-description { color: #666; }
+        .no-events { text-align: center; padding: 50px; font-size: 18px; color: #666; }
+    </style>
+</head>
+<body>
+    <header class="navbar">
+        <div class="container">
+            <a href="1.html" class="logo">
+                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                <span>UniEvents</span>
+            </a>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="1.html">Home</a></li>
+                    <li><a href="events.html">Events</a></li>
+                    <li><a href="all clubs.html">Clubs</a></li>
+                    <li><a href="contact of organizers.html">Organizers</a></li>
+                    <li><a href="adminlogin.html">Admin</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <main class="section">
+        <div class="container">
+            <h1>Cultural Events & Clubs</h1>
+            <div class="card-grid" id="items-grid"></div>
+        </div>
+    </main>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const allItems = [
+                { type: 'Event', category: 'Cultural', imageUrl: 'https://images.unsplash.com/photo-1533109721025-d1ae7ee7c1e1?auto=format&fit=crop&q=80&w=1674', title: 'Spring Cultural Festival', description: 'Celebrate diversity with performances, food, and art from around the world.' },
+                { type: 'Event', category: 'Cultural', imageUrl: 'https://th.bing.com/th/id/OIP.zNDg1rXMZYT7m2zTQNhqQwHaEK?w=307&h=180&c=7&r=0&o=7&dpr=1.3&pid=1.7&rm=3', title: 'International Film Night', description: 'Screening of award-winning foreign films, followed by a discussion.' },
+                { type: 'Club', category: 'Cultural', imageUrl: 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&q=80&w=1740', title: 'International Students Association', description: 'A club to connect students from different countries and promote cultural exchange.' },
+                 { type: 'Event', category: 'Academic', imageUrl: 'https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&q=80&w=1740', title: 'Guest Lecture: The Future of AI', description: 'A talk by Dr. Evelyn Reed on the advancements and ethical implications of artificial intelligence.' }
+            ];
+
+            const itemsGrid = document.getElementById('items-grid');
+            const culturalItems = allItems.filter(item => item.category === 'Cultural');
+
+            function createCardHTML(item) {
+                return `
+                    <div class="card">
+                        <div class="card-image"><img src="${item.imageUrl}" alt="${item.title}"></div>
+                        <div class="card-content">
+                            <h3 class="card-title">${item.title} (${item.type})</h3>
+                            <p class="card-description">${item.description}</p>
+                        </div>
+                    </div>
+                `;
+            }
+
+            if (culturalItems.length > 0) {
+                itemsGrid.innerHTML = culturalItems.map(createCardHTML).join('');
+            } else {
+                itemsGrid.innerHTML = `<p class="no-events">No cultural events or clubs found.</p>`;
+            }
+        });
+    </script>
+</body>
+</html>

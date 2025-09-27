@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Club Chat - UniEvents</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #4A69E2;
+            --dark-blue: #1C2541;
+            --background-color: #F8F9FA;
+            --white-color: #FFFFFF;
+            --border-color: #E0E0E0;
+            --chat-bg: #E5DDD5;
+        }
+        /* --- DARK MODE STYLES --- */
+body.dark-mode {
+    --dark-blue: #a7b5ff;
+    --text-color: #E0E0E0;
+    --text-light: #A0A0A0;
+    --background-color: #121212;
+    --white-color: #1E1E1E;
+    --border-color: #2c2c2c;
+    --card-shadow: 0 4px 12px rgba(0,0,0,0.4);
+}
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            background-color: var(--background-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .chat-container {
+            width: 100%;
+            max-width: 800px;
+            height: 90vh;
+            max-height: 700px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        .chat-header {
+            background-color: var(--primary-color);
+            color: var(--white-color);
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .chat-header h1 {
+            font-size: 20px;
+            margin: 0;
+        }
+        .chat-header a {
+            color: var(--white-color);
+            text-decoration: none;
+            font-size: 14px;
+        }
+        .chat-messages {
+            flex-grow: 1;
+            background-color: var(--chat-bg);
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+        .message {
+            padding: 8px 12px;
+            border-radius: 18px;
+            margin-bottom: 10px;
+            max-width: 70%;
+            font-size: 14px;
+        }
+        .message.sent {
+            background-color: #DCF8C6;
+            align-self: flex-end;
+        }
+        .message.received {
+            background-color: var(--white-color);
+            align-self: flex-start;
+        }
+        .chat-input-form {
+            display: flex;
+            padding: 10px;
+            background-color: #F0F0F0;
+        }
+        .chat-input-form input {
+            flex-grow: 1;
+            border: none;
+            padding: 12px 15px;
+            border-radius: 20px;
+            font-size: 16px;
+        }
+        .chat-input-form button {
+            background: var(--primary-color);
+            border: none;
+            color: white;
+            padding: 0 20px;
+            border-radius: 20px;
+            margin-left: 10px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <header class="chat-header">
+            <h1 id="club-name-header">Loading Club...</h1>
+            <a href="clubs.html">Leave Chat</a>
+        </header>
+        <div class="chat-messages" id="chat-messages">
+            <div class="message received">Welcome to the club chat! Introduce yourself.</div>
+            <div class="message sent">Hey everyone! Glad to be here.</div>
+            <div class="message received">Hi! Welcome to the group.</div>
+        </div>
+        <form class="chat-input-form" id="chat-form">
+            <input type="text" placeholder="Type a message..." id="message-input">
+            <button type="submit">Send</button>
+        </form>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Get the club name from the URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const clubName = urlParams.get('club');
+
+            const header = document.getElementById('club-name-header');
+            if (clubName) {
+                header.textContent = `${clubName} Chat`;
+            } else {
+                header.textContent = 'Club Chat';
+            }
+
+            // Simulate sending a message
+            const form = document.getElementById('chat-form');
+            const input = document.getElementById('message-input');
+            const messagesContainer = document.getElementById('chat-messages');
+
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const messageText = input.value;
+                if (messageText.trim() === '') return;
+
+                const messageDiv = document.createElement('div');
+                messageDiv.classList.add('message', 'sent');
+                messageDiv.textContent = messageText;
+                messagesContainer.appendChild(messageDiv);
+
+                input.value = '';
+                messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            });
+        });
+    </script>
+</body>
+</html>

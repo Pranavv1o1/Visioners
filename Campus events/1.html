@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UniEvents - Connect with Your Community</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- CSS Styles -->
+    <style>
+        :root {
+            --primary-color: #4A69E2;
+            --dark-blue: #1C2541;
+            --text-color: #333;
+            --text-light: #666;
+            --background-color: #F8F9FA;
+            --white-color: #FFFFFF;
+            --border-color: #E0E0E0;
+            --card-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+        
+
+        /* --- DARK MODE STYLES --- */
+        body.dark-mode {
+            --dark-blue: #a7b5ff;
+            --text-color: #E0E0E0;
+            --text-light: #A0A0A0;
+            --background-color: #121212;
+            --white-color: #1E1E1E;
+            --border-color: #2c2c2c;
+            --card-shadow: 0 4px 12px rgba(0,0,0,0.4);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: #FFFFFF;
+            border: 1px solid var(--primary-color);
+        }
+        .btn-primary:hover {
+            background-color: #3a55b6;
+        }
+
+        .btn-secondary {
+            background-color: var(--white-color);
+            color: var(--primary-color);
+            border: 1px solid var(--border-color);
+        }
+        body:not(.dark-mode) .btn-secondary:hover {
+             background-color: #f0f3ff;
+        }
+        body.dark-mode .btn-secondary {
+            border-color: var(--primary-color);
+        }
+        body.dark-mode .btn-secondary:hover {
+            background-color: #2a2a2a;
+        }
+        
+        .full-width {
+            width: 100%;
+        }
+
+        .navbar {
+            background-color: var(--white-color);
+            padding: 15px 0;
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+
+        .navbar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo svg {
+            stroke: var(--primary-color);
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 30px;
+            margin: 0;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+        }
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+
+        .auth-buttons {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&q=80&w=1740') no-repeat center center/cover;
+            height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: #FFFFFF;
+        }
+
+        .hero-content h1 {
+            font-size: 48px;
+            margin: 0 0 10px 0;
+        }
+
+        .hero-content p {
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+
+        .section {
+            padding: 60px 0;
+        }
+
+        .section h2 {
+            text-align: center;
+            font-size: 32px;
+            margin-bottom: 10px;
+            color: var(--dark-blue);
+        }
+        
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .card {
+            background-color: var(--white-color);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+            transition: transform 0.3s, box-shadow 0.3s, background-color 0.3s;
+            display: flex;
+            flex-direction: column;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+        }
+
+        .card-image img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            display: block;
+        }
+        
+        .card-content {
+            padding: 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-date { font-size: 14px; color: var(--text-light); margin: 0 0 10px 0; }
+        .card-title { font-size: 20px; margin: 0 0 10px 0; color: var(--dark-blue); }
+        .card-description { font-size: 14px; color: var(--text-light); margin-bottom: 20px; flex-grow: 1; }
+        .card-info { display: flex; justify-content: space-between; align-items: center; font-size: 14px; color: var(--text-light); margin-bottom: 20px; }
+
+        .site-footer {
+            background-color: var(--dark-blue);
+            color: #ccc;
+            padding: 50px 0 20px 0;
+        }
+        body.dark-mode .site-footer {
+            background-color: #1E1E1E;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-light);
+        }
+        .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1.5fr; gap: 40px; margin-bottom: 40px; }
+        
+        .footer-about .logo,
+        .footer-links h4 { 
+            color: #FFFFFF; 
+        }
+        .footer-links a { color: #ccc; text-decoration: none; }
+        .footer-links a:hover { color: #FFFFFF; }
+
+        body.dark-mode .footer-about .logo,
+        body.dark-mode .footer-links h4 {
+            color: var(--text-color);
+        }
+        body.dark-mode .footer-links a {
+            color: var(--text-light);
+        }
+        body.dark-mode .footer-links a:hover {
+            color: #FFFFFF;
+        }
+        
+        .footer-about .logo { font-size: 28px; margin-bottom: 15px; }
+        .footer-links h4 { font-size: 18px; margin-bottom: 15px; }
+        .footer-links ul { list-style: none; padding: 0; margin: 0; }
+        .footer-links li { margin-bottom: 10px; }
+        .footer-links p { margin: 0 0 10px; }
+        .footer-bottom { text-align: center; padding-top: 20px; border-top: 1px solid #333d59; font-size: 14px; }
+        body.dark-mode .footer-bottom { border-top-color: var(--border-color); }
+        
+        .modal { display: none; position: fixed; z-index: 1001; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.6); }
+        .modal-content { background-color: var(--white-color); margin: 10% auto; padding: 30px 40px; border-radius: 12px; width: 90%; max-width: 450px; position: relative; box-shadow: 0 5px 15px rgba(0,0,0,0.3); animation: fadeIn 0.4s; }
+        @keyframes fadeIn { from {opacity: 0; transform: translateY(-20px);} to {opacity: 1; transform: translateY(0);} }
+        .close-btn { color: #aaa; position: absolute; top: 10px; right: 20px; font-size: 28px; font-weight: bold; cursor: pointer; }
+        .form-container h2 { text-align: center; margin-bottom: 25px; color: var(--dark-blue); }
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; margin-bottom: 5px; font-weight: 500; }
+        .form-group input { width: 100%; padding: 10px; border: 1px solid var(--border-color); border-radius: 8px; box-sizing: border-box; background-color: var(--background-color); color: var(--text-color); }
+        .form-switcher { text-align: center; margin-top: 20px; font-size: 14px; }
+        .form-switcher span { color: var(--primary-color); cursor: pointer; font-weight: 500; }
+
+        .dark-mode-toggle {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-color);
+        }
+        .dark-mode-toggle svg {
+            width: 24px;
+            height: 24px;
+        }
+        #sun-icon { display: none; }
+        body.dark-mode #sun-icon { display: block; }
+        body.dark-mode #moon-icon { display: none; }
+    </style>
+</head>
+<body>
+
+    <header class="navbar">
+        <div class="container">
+            <a href="1.html" class="logo">
+                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                <span>UniEvents</span>
+            </a>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="1.html">Home</a></li>
+                    <li><a href="events.html">Events</a></li>
+                    <li><a href="all clubs.html">Clubs</a></li>
+                    <li><a href="contact of organizers.html">Organizers</a></li>
+                    <li><a href="adminlogin.html">Admin</a></li>
+                </ul>
+            </nav>
+            <div class="auth-buttons">
+                <button id="dark-mode-toggle" class="dark-mode-toggle" title="Toggle dark mode">
+                    <svg id="moon-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+                    <svg id="sun-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+                </button>
+                <button id="login-btn" class="btn btn-secondary">Login</button>
+                <button id="signup-btn" class="btn btn-primary">Sign Up</button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+         <section class="hero">
+            <div class="hero-content">
+                <h1>Connect with Your Campus</h1>
+                <p>Find your community and pursue your passions</p>
+                <a href="events.html" class="btn btn-primary">Explore Events</a>
+            </div>
+        </section>
+        <section class="section">
+            <div class="container">
+                <h2>Featured Events</h2>
+                <div class="card-grid" id="events-grid"></div>
+            </div>
+        </section>
+        <section class="section">
+            <div class="container">
+                <h2>Active Clubs</h2>
+                <div class="card-grid" id="clubs-grid"></div>
+            </div>
+        </section>
+    </main>
+    
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-about">
+                    <a href="#" class="logo">UniEvents</a>
+                    <p>Your central hub for university events and campus activities.</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="todays event.html">Today's Events</a></li>
+                        <li><a href="event calander.html">Event Calendar</a></li>
+                        <li><a href="submitevent.html">Submit Event</a></li>
+                        <li><a href="club directory.html">Club Directory</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Categories</h4>
+                    <ul>
+                        <li><a href="academics.html">Academic</a></li>
+                        <li><a href="sports.html">Sports</a></li>
+                        <li><a href="cultural.html">Cultural</a></li>
+                        <li><a href="techclubs.html">Tech Clubs</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Contact</h4>
+                    <p>Student Activities Office</p>
+                    <p>events@university.edu</p>
+                    <p>(555) 123-4567</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 University Campus Events Hub. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <div id="auth-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <div id="login-form-container" class="form-container">
+                <h2>Welcome Back!</h2>
+                <form id="login-form">
+                    <div class="form-group"><label for="login-email">Email</label><input type="email" id="login-email" required></div>
+                    <div class="form-group"><label for="login-password">Password</label><input type="password" id="login-password" required></div>
+                    <button type="submit" class="btn btn-primary full-width">Login</button>
+                </form>
+                <p class="form-switcher">Don't have an account? <span id="show-signup">Sign Up</span></p>
+            </div>
+            <div id="signup-form-container" class="form-container" style="display: none;">
+                <h2>Create Account</h2>
+                <form id="signup-form">
+                    <div class="form-group"><label for="signup-name">Full Name</label><input type="text" id="signup-name" required></div>
+                    <div class="form-group"><label for="signup-email">Email</label><input type="email" id="signup-email" required></div>
+                    <div class="form-group"><label for="signup-password">Password</label><input type="password" id="signup-password" required></div>
+                    <button type="submit" class="btn btn-primary full-width">Create Account</button>
+                </form>
+                <p class="form-switcher">Already have an account? <span id="show-login">Log In</span></p>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/9.6.7/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.7/firebase-auth-compat.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            const firebaseConfig = {
+                apiKey: "YOUR_API_KEY",
+                authDomain: "YOUR_AUTH_DOMAIN",
+                projectId: "YOUR_PROJECT_ID",
+                storageBucket: "YOUR_STORAGE_BUCKET",
+                messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+                appId: "YOUR_APP_ID"
+            };
+
+            firebase.initializeApp(firebaseConfig);
+            const auth = firebase.auth();
+
+            const eventsData = [
+                { imageUrl: 'https://images.unsplash.com/photo-1526045612212-70caf35c14df?auto=format&fit=crop&q=80&w=1740', category: 'Technology', date: 'Sat, Sep 27 • 09:00 AM', title: 'Tech Innovation Summit 2025', description: 'Join leading tech innovators and entrepreneurs for a day of inspiring talks, networking, and workshops.', location: 'Engineering Auditorium', capacity: '245/300', organizer: 'Alice Johnson (Tech Events)' },
+                { imageUrl: 'https://images.unsplash.com/photo-1533109721025-d1ae7ee7c1e1?auto=format&fit=crop&q=80&w=1674', category: 'Cultural', date: 'Fri, Oct 03 • 02:00 PM', title: 'Spring Cultural Festival', description: 'Celebrate diversity and culture with performances, international food stalls, art exhibitions, and more.', location: 'Main Campus Quad', capacity: '180/500', organizer: 'David Chen (Cultural Committee)' },
+                { imageUrl: 'https://images.unsplash.com/photo-1573496130407-57329f01f769?auto=format&fit=crop&q=80&w=1738', category: 'Career', date: 'Thu, Oct 09 • 10:00 AM', title: 'Career Fair 2025', description: 'Meet with top employers, explore internship opportunities, and get professional career advice.', location: 'Student Union Building', capacity: '320/400', organizer: 'Maria Garcia (Career Services)' }
+            ];
+            const clubsData = [
+                { imageUrl: 'https://images.unsplash.com/photo-1542831371-29b0f74f9713?auto=format&fit=crop&q=80&w=1740', title: 'Computer Science Club', description: 'Connecting tech enthusiasts through coding workshops, hackathons, and industry networking events.', members: 245, eventsCount: 3 },
+                { imageUrl: 'https://th.bing.com/th/id/OIP.gAz7g8b_DwmibuEGCP4DrAHaEc?w=286&h=180&c=7&r=0&o=7&dpr=1.3&pid=1.7&rm=3', title: 'Photography Society', description: 'Capturing campus life and beyond through photography workshops, exhibitions, and photo walks.', members: 85, eventsCount: 2 },
+                { imageUrl: 'https://th.bing.com/th/id/OIP.j8M0NoGo3tG-CmPkTjCbPAHaE8?w=297&h=198&c=7&r=0&o=7&dpr=1.3&pid=1.7&rm=3', title: 'Debate Society', description: 'Developing critical thinking and public speaking skills through competitive debates and discussions.', members: 65, eventsCount: 3 }
+            ];
+            
+            function createEventCardHTML(event) { 
+                const params = new URLSearchParams({ title: event.title, img: event.imageUrl, date: event.date, location: event.location, capacity: event.capacity, desc: event.description, organizer: event.organizer }).toString();
+                return `<div class="card"><div class="card-image"><img src="${event.imageUrl}" alt="${event.title}"></div><div class="card-content"><p class="card-date">${event.date}</p><h3 class="card-title">${event.title}</h3><p class="card-description">${event.description}</p><div class="card-info"><span>${event.location}</span><span>${event.capacity}</span></div><a href="event-details.html?${params}" class="btn btn-primary full-width">View Details</a></div></div>`; 
+            }
+            function createClubCardHTML(club) { 
+                 const params = new URLSearchParams({ club: club.title, members: club.members }).toString();
+                return `<div class="card"><div class="card-image"><img src="${club.imageUrl}" alt="${club.title}"></div><div class="card-content"><h3 class="card-title">${club.title}</h3><p class="card-description">${club.description}</p><div class="card-info"><span>${club.members} members</span><span>${club.eventsCount} events</span></div><a href="club-chat.html?${params}" class="btn btn-secondary full-width">Join Chat</a></div></div>`;
+            }
+            
+            document.getElementById('events-grid').innerHTML = eventsData.map(createEventCardHTML).join('');
+            document.getElementById('clubs-grid').innerHTML = clubsData.map(createClubCardHTML).join('');
+            
+            // --- MODAL & AUTH LOGIC ---
+            const modal = document.getElementById('auth-modal');
+            const loginBtn = document.getElementById('login-btn');
+            const signupBtn = document.getElementById('signup-btn');
+            const closeBtn = document.querySelector('.close-btn');
+            const loginFormContainer = document.getElementById('login-form-container');
+            const signupFormContainer = document.getElementById('signup-form-container');
+            const showSignup = document.getElementById('show-signup');
+            const showLogin = document.getElementById('show-login');
+            loginBtn.onclick = () => { modal.style.display = 'block'; signupFormContainer.style.display = 'none'; loginFormContainer.style.display = 'block'; }
+            signupBtn.onclick = () => { modal.style.display = 'block'; loginFormContainer.style.display = 'none'; signupFormContainer.style.display = 'block'; }
+            closeBtn.onclick = () => modal.style.display = 'none';
+            window.onclick = (event) => { if (event.target == modal) { modal.style.display = 'none'; } }
+            showSignup.onclick = () => { loginFormContainer.style.display = 'none'; signupFormContainer.style.display = 'block'; }
+            showLogin.onclick = () => { signupFormContainer.style.display = 'none'; loginFormContainer.style.display = 'block'; }
+            
+            document.getElementById('signup-form').addEventListener('submit', (e) => {
+                e.preventDefault();
+                const name = document.getElementById('signup-name').value;
+                const email = document.getElementById('signup-email').value;
+                const password = document.getElementById('signup-password').value;
+                auth.createUserWithEmailAndPassword(email, password)
+                    .then(userCredential => userCredential.user.updateProfile({ displayName: name }))
+                    .then(() => { alert('Account created! Please log in.'); showLogin.onclick(); })
+                    .catch(error => alert(`Error: ${error.message}`));
+            });
+
+            document.getElementById('login-form').addEventListener('submit', (e) => {
+                e.preventDefault();
+                const email = document.getElementById('login-email').value;
+                const password = document.getElementById('login-password').value;
+                auth.signInWithEmailAndPassword(email, password)
+                    .then(() => { window.location.href = new URL('dashboard.html', window.location.href).href; })
+                    .catch(error => alert(`Error: ${error.message}`));
+            });
+
+            // --- DARK MODE LOGIC ---
+            const darkModeToggle = document.getElementById('dark-mode-toggle');
+            if (localStorage.getItem('theme') === 'dark') {
+                document.body.classList.add('dark-mode');
+            }
+            darkModeToggle.addEventListener('click', () => {
+                document.body.classList.toggle('dark-mode');
+                if (document.body.classList.contains('dark-mode')) {
+                    localStorage.setItem('theme', 'dark');
+                } else {
+                    localStorage.removeItem('theme');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Organizers - UniEvents</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #4A69E2;
+            --dark-blue: #1C2541;
+            --text-color: #333;
+            --text-light: #666;
+            --background-color: #F8F9FA;
+            --white-color: #FFFFFF;
+            --border-color: #E0E0E0;
+            --card-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+        /* --- DARK MODE STYLES --- */
+body.dark-mode {
+    --dark-blue: #a7b5ff;
+    --text-color: #E0E0E0;
+    --text-light: #A0A0A0;
+    --background-color: #121212;
+    --white-color: #1E1E1E;
+    --border-color: #2c2c2c;
+    --card-shadow: 0 4px 12px rgba(0,0,0,0.4);
+}
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        .navbar {
+            background-color: var(--white-color);
+            padding: 15px 0;
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .navbar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 30px;
+            margin: 0;
+        }
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+        }
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+        .section {
+            padding: 60px 0;
+        }
+        .section h1 {
+            text-align: center;
+            font-size: 36px;
+            margin-bottom: 40px;
+            color: var(--dark-blue);
+        }
+        .organizer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+        }
+        .organizer-card {
+            background-color: var(--white-color);
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .organizer-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+        }
+        .organizer-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .organizer-header img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        .organizer-name {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--dark-blue);
+        }
+        .organizer-role {
+            font-size: 14px;
+            color: var(--primary-color);
+        }
+        .event-title {
+            font-size: 16px;
+            font-weight: 500;
+            margin-bottom: 15px;
+            border-left: 3px solid var(--primary-color);
+            padding-left: 10px;
+        }
+        .organizer-contact {
+            font-size: 14px;
+            color: var(--text-light);
+            margin-bottom: 25px;
+        }
+        .organizer-actions {
+            margin-top: auto;
+            display: flex;
+            gap: 10px;
+        }
+        .btn { padding: 10px 20px; border: none; border-radius: 8px; font-size: 16px; font-weight: 500; cursor: pointer; width: 100%; text-align: center; }
+        .btn-primary { background-color: var(--primary-color); color: var(--white-color); }
+        .btn-secondary { background-color: transparent; color: var(--primary-color); border: 1px solid var(--primary-color);}
+    </style>
+</head>
+<body>
+
+    <header class="navbar">
+        <div class="container">
+            <a href="1.html" class="logo">
+                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                <span>UniEvents</span>
+            </a>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="1.html">Home</a></li>
+                    <li><a href="events.html">Events</a></li>
+                    <li><a href="all clubs.html">Clubs</a></li>
+                    <li><a href="contact of organizers.html">Organizers</a></li>
+                    <li><a href="adminlogin.html">Admin</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="section">
+            <div class="container">
+                <h1>Event Organizers</h1>
+                <div class="organizer-grid" id="organizers-grid">
+                    <!-- Organizer cards will be inserted here -->
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const organizersData = [
+                {
+                    name: 'Alice Johnson',
+                    role: 'Head of Tech Events',
+                    event: 'Tech Innovation Summit',
+                    contact: 'alice.j@unievents.com',
+                    imageUrl: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=1287'
+                },
+                {
+                    name: 'David Chen',
+                    role: 'Cultural Committee Lead',
+                    event: 'Spring Cultural Festival',
+                    contact: 'david.c@unievents.com',
+                    imageUrl: 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&q=80&w=1287'
+                },
+                {
+                    name: 'Maria Garcia',
+                    role: 'Career Services Coordinator',
+                    event: 'Annual Career Fair',
+                    contact: 'maria.g@unievents.com',
+                    imageUrl: 'https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&q=80&w=1287'
+                },
+                 {
+                    name: 'Ben Carter',
+                    role: 'Arts Department Liaison',
+                    event: 'Student Art Showcase',
+                    contact: 'ben.c@unievents.com',
+                    imageUrl: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=1287'
+                },
+                {
+                    name: 'Priya Sharma',
+                    role: 'Hackathon Lead Organizer',
+                    event: '24-Hour Hackathon',
+                    contact: 'priya.s@unievents.com',
+                    imageUrl: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&q=80&w=1361'
+                }
+            ];
+
+            const organizersGrid = document.getElementById('organizers-grid');
+
+            function createOrganizerCardHTML(organizer) {
+                return `
+                    <div class="organizer-card">
+                        <div class="organizer-header">
+                            <img src="${organizer.imageUrl}" alt="${organizer.name}">
+                            <div>
+                                <div class="organizer-name">${organizer.name}</div>
+                                <div class="organizer-role">${organizer.role}</div>
+                            </div>
+                        </div>
+                        <div class="event-title">Organizing: ${organizer.event}</div>
+                        <div class="organizer-contact">Contact: ${organizer.contact}</div>
+                        <div class="organizer-actions">
+                            <button class="btn btn-secondary edit-btn" data-name="${organizer.name}">Edit Details</button>
+                            <button class="btn btn-primary contact-btn" data-email="${organizer.contact}">Contact</button>
+                        </div>
+                    </div>
+                `;
+            }
+
+            organizersGrid.innerHTML = organizersData.map(createOrganizerCardHTML).join('');
+
+            // Add event listeners for the buttons
+            document.querySelectorAll('.edit-btn').forEach(button => {
+                button.addEventListener('click', () => {
+                    alert(`(Admin Feature) You would now be able to edit details for ${button.dataset.name}.`);
+                });
+            });
+
+            document.querySelectorAll('.contact-btn').forEach(button => {
+                button.addEventListener('click', () => {
+                    window.location.href = `mailto:${button.dataset.email}`;
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>
